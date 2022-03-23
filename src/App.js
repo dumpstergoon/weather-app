@@ -23,6 +23,7 @@ class App extends Component {
 
 	state = {
 		query: "",
+		location: null, // Adding another state property
 		weather: null,
 		error: false,
 	};
@@ -33,6 +34,8 @@ class App extends Component {
 				value={this.state.query}
 				weather={this.state.weather}
 				error={this.state.error}
+				location={this.state.location}
+
 				onChange={e => this.onChange(e)}
 				onClick={() => this.citySearch()}
 			/>
@@ -49,6 +52,7 @@ class App extends Component {
 				// Do something else...
 				this.setState({
 					query: "",
+					location: null,
 					weather: null,
 					error: true,
 				});
@@ -65,6 +69,10 @@ class App extends Component {
 				}
 			} = req.response.current;
 
+			const {
+				name, region, country
+			} = req.response.location;
+
 			this.setState({
 				error: false,
 				weather: new Weather(
@@ -72,7 +80,11 @@ class App extends Component {
 					temperature,
 					timeOfDay,
 					icon
-				)
+				),
+				// Here, we also fetch the location of the query
+				location: {
+					name, region, country
+				}
 			});
 		});
 

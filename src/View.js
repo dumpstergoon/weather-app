@@ -3,6 +3,7 @@ export default function View({
 	onChange,
 	onClick,
 	weather,
+	location,
 	error
 }) {
 	return (
@@ -14,6 +15,14 @@ export default function View({
 				type="text"
 				placeholder="Type name of city" />
 			<button onClick={onClick}>GO!</button>
+			{
+				location && (
+					<p>
+						{location.name}<br />
+						{location.region}, {location.country}
+					</p>
+				)
+			}
 			{
 				weather && (
 					<div className="weather">
